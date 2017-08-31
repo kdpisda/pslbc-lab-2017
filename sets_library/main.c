@@ -25,6 +25,7 @@ void inputSet(int inputArray[2][MAX]){
 
     // Taking input from the user
     for(int i = 0; i < length; i++){
+        foundFlag = false;
 
         // Initialising the input in temp so that first
         // we will check whether it exists or not in 
@@ -64,22 +65,24 @@ void setUnion(){
     int unionSet[200];
     int tempSetOne[MAX], tempSetTwo[MAX];
     int counterSetOne, counterSetTwo, counterUnion = 0, i = 0, j = 0;
-    bool found = false;
+    int found = 0;
+    
+    counterSetOne = setOne[1][0];
+    counterSetTwo = setTwo[1][0];
     
     // Initialising both the arrays
-    for(i = 0; i < setOne[1][0]; i++){
+    for(i = 0; i < counterSetOne; i++){
         tempSetOne[i] = setOne[0][i];
     }
 
-    for(i = 0; i < setTwo[1][0]; i++){
+    for(i = 0; i < counterSetTwo; i++){
         tempSetTwo[i] = setTwo[0][i];
     }
 
-    counterSetOne = setOne[1][0];
-    counterSetTwo = setTwo[1][0];
     counterUnion = 0;
 
     for(i = 0; i < counterSetOne; i++){
+        found = 0;
         for(j = 0; j < counterSetTwo; j++){
 
             // Checking whether we have the element available or not
@@ -87,28 +90,25 @@ void setUnion(){
                 continue;
             }else{
                 if(tempSetOne[i] == tempSetTwo[j]){
-
                     // Marking this element so that it cannot be used again
                     tempSetTwo[j] = 0;
                     unionSet[counterUnion] = tempSetOne[i];
                     counterUnion++;
-                    found = true;
+                    found = 1;
                     break;
                 }
             }
         }
-        if (found == false){
-            printf("Not found: %d", tempSetOne[i]);
+        if (found == 0){
             unionSet[counterUnion] = tempSetOne[i];
             counterUnion++;
         }
-        printf("%d", found);
     }
 
     /* It means the traversal from first SET is completed
     || So now we need to add remaining elements from second SET
-    || Since we have marked the matched elements -1.
-    || If it is not equal to -1 then we will append this in unionSet
+    || Since we have marked the matched elements 0.
+    || If it is not equal to 0 then we will append this in unionSet
     */
     for(j = 0; j < counterSetTwo; j++){
         if(tempSetTwo[j] == 0){
@@ -117,10 +117,6 @@ void setUnion(){
             unionSet[counterUnion] = tempSetTwo[j];
             counterUnion++;
         }
-    }
-
-    for(j = 0; j < counterSetTwo; j++){
-        printf("%d\t",tempSetTwo[j]);
     }
     
     // Printing result of setOne UNION setTwo
@@ -153,9 +149,6 @@ void menu(){
 }
 
 int main(){
-
-    // system("cls");
-    fflush(stdin);
 
     // Taking first SET from the user
     printf("\nPlease enter first set: ");
