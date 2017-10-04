@@ -59,7 +59,7 @@ void inputSet(int inputArray[2][MAX]){
     inputArray[1][0] = counter;
 }
 
-// This functiono will be used for performing UNION operation
+// This function will be used for performing UNION operation
 void setUnion(){
     // Max size can be double of individuals
     int unionSet[200];
@@ -120,13 +120,55 @@ void setUnion(){
     }
     
     // Printing result of setOne UNION setTwo
-    printf("\nLength of setOne UNION setTwo %d\n",counterUnion);
+    printf("\nLength of setOne UNION setTwo %d\n ",counterUnion);
     printf("Set Formed: \n");
     for(i = 0; i < counterUnion; i++){        
         printf("%d\t", unionSet[i]);
     }
     printf("\n");
 
+}
+
+// This function will be used for performing intersectionbetween two sets
+void setIntersection(){
+    // Max size can be double of individuals
+    int intersectionSet[MAX];
+    int tempSetOne[MAX], tempSetTwo[MAX];
+    int counterSetOne, counterSetTwo, counterIntersection = 0, i = 0, j = 0;
+    int found = 0;
+
+    counterSetOne = setOne[1][0];
+    counterSetTwo = setTwo[1][0];
+    
+    // Initialising both the arrays
+    for(i = 0; i < counterSetOne; i++){
+        tempSetOne[i] = setOne[0][i];
+    }
+
+    for(i = 0; i < counterSetTwo; i++){
+        tempSetTwo[i] = setTwo[0][i];
+    }
+
+    counterIntersection = 0;
+
+    for(i = 0; i < counterSetOne; i++){
+        for(j = 0; j < counterSetTwo; j++){
+            if(setOne[i] == setTwo[j] && setOne[j] != 0){
+                intersectionSet[counterIntersection] = setOne[i];
+                setOne[i] = 0;
+                setTwo[j] = 0;
+                counterIntersection++;
+            }
+        }
+    }
+
+    // Printing result of setOne INTERSECTION setTwo
+    printf("\nLength of setOne INTERSECTION setTwo %d\n ",counterIntersection);
+    printf("Set Formed: \n");
+    for(i = 0; i < counterIntersection; i++){        
+        printf("%d\t", intersectionSet[i]);
+    }
+    printf("\n");
 }
 
 // This menu would be shown to the user. And this will be the welcome screen
@@ -143,7 +185,9 @@ void menu(){
     switch(choice){
         case 1 : setUnion();
                  break;
-        default: printf("Sorry Invalid option");
+        case 2 : setIntersection();
+                 break;
+        default: printf("Sorry Invalid option\n");
                  break;
     }
 }
