@@ -1,6 +1,4 @@
 #include <stdio.h>
-#include <stdbool.h>
-#include <stdlib.h>
 
 // Defining the MAX size of set
 #define MAX 100
@@ -136,6 +134,7 @@ void setIntersection(){
     int tempSetOne[MAX], tempSetTwo[MAX];
     int counterSetOne, counterSetTwo, counterIntersection = 0, i = 0, j = 0;
     int found = 0;
+    int flag = 0;
 
     counterSetOne = setOne[1][0];
     counterSetTwo = setTwo[1][0];
@@ -151,14 +150,24 @@ void setIntersection(){
 
     counterIntersection = 0;
 
-    for(i = 0; i < counterSetOne; i++){
-        for(j = 0; j < counterSetTwo; j++){
+    sort(tempSetOne[0], tempSetOne[counterSetOne]);
+    sort(tempSetTwo[0], tempSetTwo[counterSetTwo]);
+
+    for(i = 0; i < counterSetOne;){
+        flag = 0;
+        for(j = 0; j < counterSetTwo;j++){
             if(setOne[i] == setTwo[j] && setOne[j] != 0){
-                intersectionSet[counterIntersection] = setOne[i];
-                setOne[i] = 0;
-                setTwo[j] = 0;
+                intersectionSet[counterIntersection] = tempSetOne[i];
+                tempSetOne[i] = 0;
+                tempSetTwo[j] = 0;
                 counterIntersection++;
+                i++;
+                flag = 1;
+                break;
             }
+        }
+        if(flag = 0){
+            i++;
         }
     }
 

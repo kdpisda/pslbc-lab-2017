@@ -5,9 +5,10 @@ int main(){
     char str[50], count_char[50];
     int count[50], len, i, j, counter = 0;
     printf("Enter the string: ");
-    gets(str);
+    scanf("%s", str);
     len = strlen(str);
     for(i = 0; i < len; i++){
+        counter = 0;
         for(j = i; j < len; j++){
             if(i!=j && str[j] != '.'){
                 if(str[i] == str[j]){
@@ -17,6 +18,9 @@ int main(){
                 }
             }
         }
+        if(str[i] != '.'){
+            printf("%d\n", counter);
+        }
     }
-    for(i = 0; i < counter; i++)
+    return 0;
 }
